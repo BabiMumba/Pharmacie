@@ -30,7 +30,10 @@ public class Pharmacie {
         Gson gson = new Gson();
         Type type = new TypeToken<Map<String, Medicament>>(){}.getType();
         try (FileReader reader = new FileReader("medicaments.json")) {
-            medicaments = gson.fromJson(reader, type);
+            // Directly assign the deserialized object to a Map reference
+            Map<String, Medicament> tempMedicaments = gson.fromJson(reader, type);
+            // If you specifically need HashMap, you can still convert it
+            medicaments = new HashMap<>(tempMedicaments);
         }
     }
     public void ajouterMedicament(Medicament medicament) throws MedicamentExistantException {
@@ -74,6 +77,7 @@ public class Pharmacie {
         System.out.println("Nombre total de médicaments: " + medicaments.size());
     }
     public void afficherTousLesMedicaments() {
+        //afficher tous les médicaments depuis la GSON
         medicaments.values().forEach(System.out::println);
     }
 

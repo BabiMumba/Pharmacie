@@ -78,7 +78,12 @@ public class Main {
 
                         break;
                     case 7:
-                        pharmacie.afficherTousLesMedicaments();
+                        try {
+                            pharmacie.chargerMedicaments();
+                            System.out.println("Médicaments chargés avec succès.");
+                        } catch (IOException e) {
+                            System.out.println("Erreur lors du chargement des médicaments: " + e.getMessage());
+                        }
                         break;
                     case 8:
                         pharmacie.afficherNombreMedicaments();
