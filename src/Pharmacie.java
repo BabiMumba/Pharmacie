@@ -1,5 +1,15 @@
+
+
+import Model.Medicament;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.lang.reflect.Type;
 import java.util.HashMap;
-import java.util.Scanner;
+import java.util.Map;
 
 public class Pharmacie {
     private HashMap<String, Medicament> medicaments;//
@@ -8,13 +18,27 @@ public class Pharmacie {
         medicaments = new HashMap<>();
     }
 
-    public void ajouterMedicament(Medicament medicament) {
-        // Ajouter un médicament à la pharmacie en utilisant l'ID comme clé si l'ID n'existe pas déjà
-        if (!medicaments.containsKey(medicament.getId())) {
+
+    public void sauvegarderMedicaments() throws IOException {
+        Gson gson = new Gson();
+        String json = gson.toJson(medicaments);
+        try (FileWriter writer = new FileWriter("medicaments.json")) {
+            writer.write(json);
+        }
+    }
+    public void chargerMedicaments() throws IOException {
+        Gson gson = new Gson();
+        Type type = new TypeToken<Map<String, Medicament>>(){}.getType();
+        try (FileReader reader = new FileReader("medicaments.json")) {
+            medicaments = gson.fromJson(reader, type);
+        }
+    }
+    public void ajouterMedicament(Medicament medicament) throws MedicamentExistantException {
+        if (medicaments.containsKey(medicament.getId())) {
+            throw new MedicamentExistantException("Un médicament avec cet ID existe déjà.");
+        } else {
             medicaments.put(medicament.getId(), medicament);
             System.out.println("Médicament ajouté avec succès.");
-        } else {
-            System.out.println("Un médicament avec cet ID existe déjà.");
         }
     }
 

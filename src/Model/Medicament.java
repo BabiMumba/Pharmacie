@@ -1,4 +1,6 @@
-class Medicament {
+package Model;
+
+public class Medicament {
     private String id;
     private String nom;
     private String type; // "vente libre" ou "sur ordonnance"

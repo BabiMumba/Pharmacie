@@ -1,3 +1,6 @@
+import Model.Medicament;
+
+import java.io.IOException;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -17,7 +20,8 @@ public class Main {
             System.out.println("6. Lister les médicaments par lettre");
             System.out.println("7. Afficher tous les médicaments");
             System.out.println("8. Afficher le nombre de médicaments");
-            System.out.println("9. Quitter");
+            System.out.println("9. Sauvegarder les médicaments");
+            System.out.println("10. Quitter");
             System.out.print("Choisissez une option: ");
 
             try {
@@ -80,6 +84,9 @@ public class Main {
                         pharmacie.afficherNombreMedicaments();
                         break;
                     case 9:
+                        pharmacie.sauvegarderMedicaments();
+                        break;
+                    case 10:
                         continuer = false;
                         break;
                     default:
@@ -88,6 +95,10 @@ public class Main {
             } catch (InputMismatchException e) {
                 System.out.println("Entrée invalide. Veuillez entrer un nombre.");
                 scanner.next(); // to consume the invalid input
+            } catch (IOException e) {
+                System.out.println("Erreur lors de la sauvegarde des médicaments.");
+            } catch (MedicamentExistantException e) {
+                System.out.println(e.getMessage());
             }
 
             if (continuer) {
