@@ -21,7 +21,8 @@ public class Main {
             System.out.println("7. Afficher tous les médicaments");
             System.out.println("8. Afficher le nombre de médicaments");
             System.out.println("9. Sauvegarder les médicaments");
-            System.out.println("10. Quitter");
+            System.out.println("10. Charger les médicaments");
+            System.out.println("11. Quitter");
             System.out.print("Choisissez une option: ");
 
             try {
@@ -78,12 +79,7 @@ public class Main {
 
                         break;
                     case 7:
-                        try {
-                            pharmacie.chargerMedicaments();
-                            System.out.println("Médicaments chargés avec succès.");
-                        } catch (IOException e) {
-                            System.out.println("Erreur lors du chargement des médicaments: " + e.getMessage());
-                        }
+                        pharmacie.afficherTousLesMedicaments();
                         break;
                     case 8:
                         pharmacie.afficherNombreMedicaments();
@@ -92,6 +88,14 @@ public class Main {
                         pharmacie.sauvegarderMedicaments();
                         break;
                     case 10:
+                        try {
+                            pharmacie.chargerMedicaments();
+                            System.out.println("Médicaments chargés avec succès.");
+                        } catch (IOException e) {
+                            System.out.println("Erreur lors du chargement des médicaments: " + e.getMessage());
+                        }
+                        break;
+                    case 11:
                         continuer = false;
                         break;
                     default:
