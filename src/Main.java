@@ -49,10 +49,8 @@ public class Main {
                         insertData(conn, pharmacie);
                         break;
                     case 2:
+                        deleteData(conn, pharmacie);
                         //pour supprimer un médicament
-                        System.out.print("Entrez l'ID du médicament à supprimer: ");
-                        String idMedicament = scanner.next();
-                        pharmacie.supprimerMedicament(idMedicament);
                         break;
                     case 3:
                         System.out.print("Entrez l'ID du médicament à rechercher: ");
@@ -72,14 +70,7 @@ public class Main {
                         break;
                     case 5:
                         //pour modifier un médicament
-                        System.out.print("Entrez l'ID du médicament à modifier: ");
-                        String idMedicamentModif = scanner.next();
-                        System.out.print("Entrez le nouveau nom du médicament: ");
-                        String nomMedicamentModif = scanner.next();
-                        System.out.print("Entrez le nouveau type du médicament: ");
-                        String typeMedicamentModif = scanner.next();
-                        pharmacie.modifierMedicament(idMedicamentModif, nomMedicamentModif, typeMedicamentModif);
-
+                        updateData(conn, pharmacie);
                         break;
                     case 6:
                         //pour lister les médicaments par lettre
@@ -126,6 +117,7 @@ public class Main {
         }
 
     }
+
     public static void  insertData(Connection conn, Pharmacie pharmacie) {
         //fonction pour insérer les données dans la base de données
         Scanner scanner = new Scanner(System.in);
@@ -168,7 +160,7 @@ public class Main {
             e.printStackTrace();
         }
     }
-    public static void updateData(Connection conn) {
+    public static void updateData(Connection conn,Pharmacie pharmacie) {
         //fonction pour mettre à jour les données de la base de données
         try {
             Scanner scanner = new Scanner(System.in);
@@ -184,13 +176,14 @@ public class Main {
             preparedStatement.setString(2, type);
             preparedStatement.setString(3, id);
             preparedStatement.executeUpdate();
+            pharmacie.modifierMedicament(id, nom, type);
             System.out.println("Médicament mis à jour avec succès");
         } catch (SQLException e) {
             System.out.println("An error occurred. Maybe user/password is invalid");
             e.printStackTrace();
         }
     }
-    public static void deleteData(Connection conn) {
+    public static void deleteData(Connection conn, Pharmacie pharmacie) {
         //fonction pour supprimer les données de la base de données
         try {
             Scanner scanner = new Scanner(System.in);
@@ -200,6 +193,8 @@ public class Main {
             PreparedStatement preparedStatement = conn.prepareStatement(query);
             preparedStatement.setString(1, id);
             preparedStatement.executeUpdate();
+
+            pharmacie.supprimerMedicament(id);
             System.out.println("Médicament supprimé avec succès");
         } catch (SQLException e) {
             System.out.println("An error occurred. Maybe user/password is invalid");
