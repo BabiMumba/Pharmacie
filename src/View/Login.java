@@ -4,12 +4,8 @@ import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
+import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -68,24 +64,26 @@ public class Login extends Application {
         grid.add(bp, 1, 4);
 
         final Text actiontarget = new Text();
+        final ProgressIndicator progressIndicator = new ProgressIndicator();
         grid.add(actiontarget, 1, 6);
 
         btn.setOnAction(e -> {
             if (userTextField.getText().isEmpty() || pwBox.getText().isEmpty()) {
                 showAlert(AlertType.ERROR, "Erreur", "Veuillez remplir tous les champs.");
             } else {
+                progressIndicator.setProgress(0.5);
                 actiontarget.setFill(Color.GREEN);
                 String nom = userTextField.getText();
                 String mot_passe = pwBox.getText();
-                //DataBase.connect();
-                //connecte qui sera utilisée pour se connecter à la base de données
                 Connection conn = DataBase.connect();
                 if (conn != null) {
                     boolean isUserExist = DataBase.saveUser(conn, nom, mot_passe);
                     if (isUserExist) {
                         actiontarget.setText("Connexion réussie");
+                        progressIndicator.setProgress(1);
                     } else {
                         actiontarget.setText("Nom d'utilisateur ou mot de passe incorrect");
+                        progressIndicator.setProgress(0);
                     }
                 } else {
                     actiontarget.setText("Connexion échouée");
@@ -93,7 +91,7 @@ public class Login extends Application {
             }
         });
 
-        Scene scene = new Scene(grid, 1000, 600);
+        Scene scene = new Scene(grid, 600, 400);
         primaryStage.setScene(scene);
         primaryStage.show();
     }

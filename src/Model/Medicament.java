@@ -1,9 +1,9 @@
 package Model;
 
 public class Medicament {
-    private String id;
-    private String nom;
-    private String type; // "vente libre" ou "sur ordonnance"
+    private final String id;
+    private final String nom;
+    private final String type;
 
     public Medicament(String id, String nom, String type) {
         this.id = id;
@@ -11,8 +11,7 @@ public class Medicament {
         this.type = type;
     }
 
-    // Getters et setters
-    public String getId() {
+    public String  getId() {
         return id;
     }
 
@@ -23,15 +22,6 @@ public class Medicament {
     public String getType() {
         return type;
     }
-
-    public void setNom(String nom) {
-        this.nom = nom;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
     @Override
     public String toString() {
         return "ID: " + id + ", Nom: " + nom + ", Type: " + type;
