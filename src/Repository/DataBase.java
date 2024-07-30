@@ -1,5 +1,7 @@
 package Repository;
 
+import Model.User;
+
 import java.sql.*;
 
 public class DataBase {
@@ -22,18 +24,36 @@ public class DataBase {
 
     //fonction pour insérer les données dans la base de données
 
-    public static boolean saveUser(Connection conn, String nom, String mot_passe) {
+    public static boolean LoginUser(Connection conn, String nom, String mot_passe) {
         boolean isUserExist;
         try {
-            String query = "INSERT INTO PERSONNE (nom, motdepasee) VALUES (?, ?)";
+            String query = "SELECT * FROM personne WHERE nom = ? AND motdepasse = ?";
             PreparedStatement preparedStatement = conn.prepareStatement(query);
             preparedStatement.setString(1, nom);
             preparedStatement.setString(2, mot_passe);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            isUserExist = resultSet.next();
+        } catch (SQLException e) {
+            System.out.println("An error occurred. Maybe user/password is invalid");
+            e.printStackTrace();
+            isUserExist = false;
+        }
+        return isUserExist;
+    }
+
+    public static  boolean CreatUser(Connection conn, User user){
+        boolean isUserExist;
+        try {
+            String query = "INSERT INTO personne (matricule, nom, poste_nom, motdepasse) VALUES (?, ?, ?, ?)";
+            PreparedStatement preparedStatement = conn.prepareStatement(query);
+            preparedStatement.setString(1, user.getMatricule());
+            preparedStatement.setString(2, user.getNom());
+            preparedStatement.setString(3, user.getPoste_nom());
+            preparedStatement.setString(4, user.getMotdepasse());
             preparedStatement.executeUpdate();
-            System.out.println("Utilisateur ajouté avec succès");
             isUserExist = true;
         } catch (SQLException e) {
-            System.out.println("Une erreur est survenue. Peut-être que le nom d'utilisateur ou le mot de passe est invalide.");
+            System.out.println("An error occurred. Maybe user/password is invalid");
             e.printStackTrace();
             isUserExist = false;
         }
@@ -82,6 +102,19 @@ public class DataBase {
             preparedStatement.setString(3, values[0]);
             preparedStatement.executeUpdate();
             System.out.println("Médicament mis à jour avec succès");
+        } catch (SQLException e) {
+            System.out.println("An error occurred. Maybe user/password is invalid");
+            e.printStackTrace();
+        }
+    }
+
+    public static void deleteData(Connection conn, String table, String id) {
+        try {
+            String query = "DELETE FROM " + table + " WHERE id = ?";
+            PreparedStatement preparedStatement = conn.prepareStatement(query);
+            preparedStatement.setString(1, id);
+            preparedStatement.executeUpdate();
+            System.out.println("Médicament supprimé avec succès");
         } catch (SQLException e) {
             System.out.println("An error occurred. Maybe user/password is invalid");
             e.printStackTrace();
