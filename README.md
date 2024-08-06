@@ -5,7 +5,8 @@ Pharmaco est un logiciel de gestion de pharmacie conçu pour aider les pharmacie
 Médicaments en vente libre : Ces médicaments peuvent être achetés sans ordonnance médicale. Le logiciel permet de suivre leur stock, leurs prix et leurs informations spécifiques.
 Médicaments sur ordonnance : Ces médicaments ne peuvent être délivrés que sur présentation d'une ordonnance médicale.
 ## video de presentation youtube:
-[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/v-kTPYPVE5s/0.jpg)](https://www.youtube.com/watch?v=kTPYPVE5s)
+### https://www.youtube.com/watch?v=v-kTPYPVE5s&ab_channel=BabiMumba
+[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/v-kTPYPVE5s/0.jpg)](https://www.youtube.com/watch?v=v-kTPYPVE5s)
 
 ## Caractéristiques principales de Pharmaco :
 
